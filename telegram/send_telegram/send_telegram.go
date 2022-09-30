@@ -35,16 +35,17 @@ func getUrl() string {
 	return fmt.Sprintf("https://api.telegram.org/bot%s", Token)
 }
 
-func SendMessage(destination string, text string) (bool, error) {
+func SendMessage(destination string, text string, silent bool) (bool, error) {
 	// Global variables
 	var err error
 	var response *http.Response
 
 	// Send the message
 	url := fmt.Sprintf("%s/sendMessage", getUrl())
-	body, _ := json.Marshal(map[string]string{
+	body, _ := json.Marshal(map[string]interface{}{
 		"chat_id": destination,
-		"text":    text,
+		"text": text,
+		"disable_notification":	silent,
 	})
 	response, err = http.Post(
 		url,
@@ -76,6 +77,7 @@ func main() {
 	var (
 		destination = flag.String("destination", "", "[MANDATORY] ID of the destination user/group")
 		message 	= flag.String("message", "Hello There!", "Message that will be send")
+		silent		= flag.Bool("silent", false, "If is set, the message won't be notified")
 	)
 	flag.Parse()
 	if *destination == "" {
@@ -91,7 +93,7 @@ func main() {
 	}
 
 	// Send a message
-	_, err = SendMessage(*destination, *message)
+	_, err = SendMessage(*destination, *message, *silent)
 	if err != nil {
 		log.Fatalf("%s", err)
 	}

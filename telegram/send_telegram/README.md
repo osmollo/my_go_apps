@@ -84,7 +84,7 @@ El código necesita tener definida la siguiente variable de entorno:
 ```shell
 export TOKEN="123123:kjahdhjhajkfdhakhfd"
 
-go run send_telegram.go --destination "12345" --message "hola mundo"
+go run send_telegram.go --destination "12345" --message "hola mundo" [--silent]
 ```
 
 ### compilar código
@@ -108,5 +108,5 @@ El binario necesita tener definida la siguiente variable de entorno:
 ```shell
 export TOKEN="123123:kjahdhjhajkfdhakhfd"
 
-./send_telegram --destination 12345 --message "esto es una prueba"
+./send_telegram --destination 12345 --message "esto es una prueba" [--silent]
 ```
